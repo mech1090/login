@@ -1,7 +1,12 @@
 
 const getLoginForm = (req,res)=>{
     console.log('HITTING LOGIN FORM')
-    res.send('Hitting login form area')
+    res.render('login/layout')
 }
 
-module.exports = {getLoginForm}
+const getSignForm = (req,res)=>{
+    console.log('HITTING SIGNUP FORM')
+    res.render('signup/layout')
+}
+
+module.exports = {getLoginForm,getSignForm}
