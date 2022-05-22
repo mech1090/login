@@ -1,5 +1,8 @@
 const express = require('express')
 const cors = require('cors')
+const config = require('config')
+const { default: mongoose } = require('mongoose')
+require('./db')
 
 const app = express()
 
@@ -17,8 +20,12 @@ app.get('*',(req,res)=>{
     res.status(404).send('BAD_REQUEST')
 })
 
-const port = 3300
+const port = config.get('port')
 
-app.listen(port,()=>{
-    console.log(`SERVER IS RUNNING ON PORT ${port}`)
+
+mongoose.connection.once('open',()=>{
+    app.listen(port,()=>{
+        console.log(`SERVER IS RUNNING ON PORT ${port}`)
+    })
+    console.log('DB CONNECTED')
 })
