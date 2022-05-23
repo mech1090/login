@@ -1,9 +1,13 @@
 const modelUser = require('../model/user')
 const bcrypt = require('bcrypt')
 const config = require('config')
+const serviceUser = require('../services/user.service')
+
+
 const getLoginForm = (req,res)=>{
     res.render('login/layout')
 }
+
 const login = async(req,res)=>{
     const {email,password} = req.body
     const findUser = await modelUser.findOne({email})
@@ -21,9 +25,11 @@ const getSignForm = (req,res)=>{
 }
 const signup =async (req,res)=>{
     const {email,password} = req.body
+    const emailField = {email}
+//    const emailFind = await serviceUser.find(emailField)
     const emailFind = await modelUser.findOne({email})
     if(emailFind){
-        return res.render('signup/layout',{message:'User Already exist'})
+        return res.render('login/layout',{message:'User Already exist Login'})
     }
     const hashedPassword = await bcrypt.hash(password,config.get('hashing.salt'))
     const newUser = await modelUser.create({email,password:hashedPassword})
