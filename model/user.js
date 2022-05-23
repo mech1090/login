@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     }
 },
 {
-    collation:'users'
+    collection:'user login'
 }
 )
 
