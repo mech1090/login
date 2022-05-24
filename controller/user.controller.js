@@ -26,13 +26,20 @@ const getSignForm = (req,res)=>{
 const signup =async (req,res)=>{
     const {email,password} = req.body
     const emailField = {email}
-//    const emailFind = await serviceUser.find(emailField)
-    const emailFind = await modelUser.findOne({email})
+    const passwordField = {password}
+//    const fields = {email,password}
+    const emailFind = await serviceUser.find(emailField)
+    const hashedPassword = await bcrypt.hash(password,config.get('hashing.salt'))
+    const fields = {email,hashedPassword}
+ //   const emailFind = await modelUser.findOne({email})
     if(emailFind){
         return res.render('login/layout',{message:'User Already exist Login'})
     }
-    const hashedPassword = await bcrypt.hash(password,config.get('hashing.salt'))
-    const newUser = await modelUser.create({email,password:hashedPassword})
+    
+ //   const newUser = await serviceUser.create(hashedfields)
+    const newUser = await serviceUser.create(fields)
+//    console.log(email,hashedPassword)
+//    const newUser = await modelUser.create({email,password:hashedPassword})
     return res.render('signup/layout',{message:'New User Created'})
 }
 
