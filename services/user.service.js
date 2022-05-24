@@ -8,7 +8,6 @@ const find = async(fields)=>{
 }
 
 const create = async(fields)=>{
-    console.log(fields)
     const newUser = await modelUser.create(fields)
     return newUser
 }
