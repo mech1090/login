@@ -10,7 +10,7 @@ const getLoginForm = (req,res)=>{
 
 const login = async(req,res)=>{
     const {email,password} = req.body
-    const findUser = await modelUser.findOne({email})
+    const findUser = await serviceUser.find({email})
     const matchPassword = await bcrypt.compare(password,findUser.password)
     if(!matchPassword){
         return res.render('login/layout',{message:'Email or Password Wrong'})
@@ -23,13 +23,12 @@ const login = async(req,res)=>{
 const getSignForm = (req,res)=>{
     res.render('signup/layout')
 }
+
 const signup =async (req,res)=>{
     const {email,password} = req.body
-//    const emailField = {email}
-//    const passwordField = {password}
     const hashedPassword = await bcrypt.hash(password,config.get('hashing.salt'))
     const fields = {email,password:hashedPassword}
-    const emailFind = await modelUser.findOne({email})
+    const emailFind = await serviceUser.find({email})
     if(emailFind){
         return res.render('login/layout',{message:'User Already exist Login'})
     }

@@ -18,7 +18,7 @@ app.set('view engine','pug')
 app.set('views','./views')
 
 app.get('/',(req,res)=>{
-    res.send('PLUMBING OKK')
+    res.send('INITIAL SETUP OKK')
 })
 
 app.get('*',(req,res)=>{
